@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://auth-db:5432/authdb
+    username: kiril
+    password: kiril
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
+
+card:
+  encryption:
+    key: ${CARD_ENCRYPTION_KEY:mySuperSecretKey123}
+
+jwt:
+  secret: ${JWT_SECRET:}
+  expiration: 86400000
+
+springdoc:
+  swagger-ui:
+    urls-primary-name: Localhost (HTTP)
+    url: http://localhost:8080/v3/api-docs
+
+logging:
+  level:
+    org.springframework.web: DEBUG

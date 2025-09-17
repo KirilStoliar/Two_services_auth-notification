@@ -1,0 +1,21 @@
+services:
+  auth-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: authdb
+      POSTGRES_USER: kiril
+      POSTGRES_PASSWORD: kiril
+    ports:
+      - "5434:5432"
+
+  auth-service:
+    build: ./auth-microservice
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-db:5432/authdb
+      SPRING_DATASOURCE_USERNAME: kiril
+      SPRING_DATASOURCE_PASSWORD: kiril
